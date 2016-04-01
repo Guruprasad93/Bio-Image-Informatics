@@ -1,5 +1,5 @@
 
-function [imGauss] = Gaussian_filter(im)
+function [imGauss] = Gaussian_filter(im,pixelSize)
 %% The Inputs to the function are as follows
 % pathToImage : Takes as input a string which specifies the path to the
 % image
@@ -26,7 +26,7 @@ NA = 1.4;
 radius = 0.61*lambda/NA;
 
 %Gaussian kernel sigma
-sigVal = radius/3;
+sigVal = (radius/3)/(pixelSize);
 
 %% Apply the Gaussian filter for all sigma
 

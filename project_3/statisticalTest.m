@@ -19,7 +19,7 @@ for i = 1:num_rows
     T = abs(associationMat(i,3) - I_BG)/sqrt(var_deltaI);
     
     if T>=Quantile
-        finalMaxima(ctr,:) = [associationMat(i,2),associationMat(i,1)]; %[row, col]
+        finalMaxima(ctr,:) = [associationMat(i,2),associationMat(i,1),associationMat(i,3)]; %[row, col,pointIntensity]
         ctr = ctr + 1;
     end
     
