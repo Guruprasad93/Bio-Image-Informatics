@@ -9,7 +9,7 @@ I_detection(indices) = finalMaxima(:,3);
 [I_detection] = Gaussian_filter(I,65*1e-9);
 
 %White noise - mean = noise_mean; standard-dev = average of all detected localmaxima
-I_noise = randn(size(I))*0.15*mean(finalMaxima(:,3)) + noise_mean;
+I_noise = randn(size(I))*0.25*mean(finalMaxima(:,3)) + noise_mean;
 
 %Adding noise to psf convolved detected image
 I_synthetic = I_detection + I_noise;
