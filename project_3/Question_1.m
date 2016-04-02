@@ -47,6 +47,12 @@ file_save = sprintf('detectionImages\\img%0.3d.png',1);
 save(file_save, 'I_detection');
 %imwrite(I_detection, file_save);
 
+%% Creation of synthetic Image
+
+I_synthetic = createSynthetic(finalMaxima, I, bkgdMean);
+
+
+
 %% All other Images
 
 % for image_num = 2:218
