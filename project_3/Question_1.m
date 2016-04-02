@@ -51,7 +51,15 @@ save(file_save, 'I_detection');
 
 I_synthetic = createSynthetic(finalMaxima, I, bkgdMean);
 
+%% Subpixel Detection
 
+%Passing the (Un)convolved original image for gaussian level detection
+finalsubPixelMaxima = subPixelDetection(finalMaxima, I);
+
+
+%% Extra Credit (Measuring bias and standard deviation)
+
+[Algo_subPixelMaxima, Real_subPixelMaxima] = extraCredit(I_synthetic, finalMaxima);
 
 %% All other Images
 
