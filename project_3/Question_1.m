@@ -37,7 +37,8 @@ Quantile = 6.0;
 I_detection = zeros(size(I));
 indices = sub2ind(size(I),finalMaxima(:,1),finalMaxima(:,2));
 
-I_detection(indices) = finalMaxima(:,3);
+%I_detection(indices) = finalMaxima(:,3);
+I_detection(indices) = 100;
 
 %finalDetect = [
 
@@ -49,7 +50,7 @@ save(file_save, 'I_detection');
 
 %% Creation of synthetic Image
 
-I_synthetic = createSynthetic(finalMaxima, I, bkgdMean);
+I_synthetic = createSynthetic(finalMaxima, I, bkgdMean,0.25);
 
 %% Subpixel Detection
 
@@ -59,7 +60,21 @@ finalsubPixelMaxima = subPixelDetection(finalMaxima, I);
 
 %% Extra Credit (Measuring bias and standard deviation)
 
-[Algo_subPixelMaxima, Real_subPixelMaxima] = extraCredit(I_synthetic, finalMaxima);
+%Convolved synthetic image   
+I_detection = zeros(size(I));
+indices = sub2ind(size(I),finalMaxima(:,1),finalMaxima(:,2));
+I_detection(indices) = finalMaxima(:,3);
+%gaussian conv with point-spread-function
+%[I_detection] = Gaussian_filter(I,65*1e-9);
+
+
+[Algo_subPixelMaxima, Real_subPixelMaxima] = extraCredit(I_synthetic, I_detection, finalMaxima);
+
+euclidDist = ((Algo_subPixelMaxima(:,3)-Real_subPixelMaxima(:,1)).^2 + (Algo_subPixelMaxima(:,4)-Real_subPixelMaxima(:,2)).^2);
+euclidDist = sqrt(euclidDist);
+
+detectionError_mean = mean(euclidDist);
+detectionError_std = std(euclidDist);
 
 %% All other Images
 

@@ -1,20 +1,35 @@
-function [] = subPixelDetection(finalMaxima, I)
+function [subPixelDetect, realSubPixelMaxima] = subPixelDetection(finalMaxima, I)
 
 %Access final detected particles
 
 for i = 1:size(finalMaxima,1)
-    
-    %Oversample close to pixel-level detection
+
+    %select pixel-level detection
     I_oversample = I(finalMaxima(i,1)-1:finalMaxima(i,1)+1,finalMaxima(i,2)-1:finalMaxima(i,2)+1);
-    I_localMax = max(I_oversample(:));
+   
+    %I_localMax = max(I_oversample(:));
+    I_localMax = finalMaxima(i,3);
     
-    %Perform gaussian detection
-    subpixel = gaussianDetection(I_oversample, I_localMax);
+    %Oversample results from pixel-level detection
+    I_oversample = imresize(I_oversample,5,'bilinear'); 
     
-    subpixelDetect(i,:) = [(finalMaxima(i,1)-1)*5+subpixel(1);
+    %Convolved synthetic image
+    
+    I_detection = zeros(size(I));
+    indices = sub2ind(size(I),finalMaxima(:,1),finalMaxima(:,2));
+    I_detection(indices) = finalMaxima(:,3);
+    %gaussian conv with point-spread-function
+    [I_detection] = Gaussian_filter(I,65*1e-9);
+    
+    I_realoverSample = I_detection(finalMaxima(i,1)-1:finalMaxima(i,1)+1,finalMaxima(i,2)-1:finalMaxima(i,2)+1);
+    %Oversample results from pixel-level detection
+    I_realoverSample = imresize(I_realoverSample,5,'bilinear'); 
     
     
-
-
-
+    [oversampleMax,index] = max(I_realoverSample(:));
+    %I_localMax = oversampleMax
+    [rowMax, colMax] = ind2sub(size(I_oversample),index);
+    realSubPixelMaxima(i,:) = [rowMax, colMax];
+     
+    
 end
