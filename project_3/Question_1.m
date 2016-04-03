@@ -60,7 +60,7 @@ finalsubPixelMaxima = subPixelDetection(finalMaxima, I);
 
 %% Extra Credit (Measuring bias and standard deviation)
 
-%Convolved synthetic image   
+%Raw synthetic image   
 I_detection = zeros(size(I));
 indices = sub2ind(size(I),finalMaxima(:,1),finalMaxima(:,2));
 I_detection(indices) = finalMaxima(:,3);
