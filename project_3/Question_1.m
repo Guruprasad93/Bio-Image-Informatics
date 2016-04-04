@@ -53,7 +53,7 @@ save(file_save, 'I_detection');
 
 %% Creation of synthetic Image
 
-I_synthetic = createSynthetic(finalMaxima, I, bkgdMean,0.25);
+I_synthetic = createSynthetic(finalMaxima, I, bkgdMean,0.10);
 
 %% Subpixel Detection
 

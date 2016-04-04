@@ -23,7 +23,7 @@ function [subpixel] = gaussianDetection(I_oversample, I_max)
 
     % Look for the co-ordinates in the oversampled image where the least
     % square error fit with the gaussian is minimum. The pixel co-ordinates
-    % with least square error are recorded as the subpixel co-ordinates.
+    % with least square error 
    
     min_intensity = Inf;
     
