@@ -7,6 +7,9 @@ function [imGauss] = Gaussian_filter(im,pixelSize)
 % sigma : Is a vector variable that takes as input the values of sigma
 % For Example sigma = [1,2,5,7]
 
+% input pixelSize should have unit in meters, that is, if pixel size is
+% 65nm, then input pixelSize = 65e-9
+
 % The output of the function consists of a series of images for different
 % sigma values
 
@@ -21,7 +24,7 @@ function [imGauss] = Gaussian_filter(im,pixelSize)
 
 %% 
 %Rayleigh's radius
-lambda = 515*1e-9;
+lambda = 515e-9;
 NA = 1.4;
 radius = 0.61*lambda/NA;
 
@@ -31,10 +34,11 @@ sigVal = (radius/3)/(pixelSize);
 %% Apply the Gaussian filter for all sigma
 
 % Define size of Gaussian mask
-    N = (2*(3*sigVal))+1;
+    N = (2*ceil(3*sigVal))+1;
 
     %Display the size of the gaussian mask
-    display(strcat('Size of the gaussian kernel for sigma = ',num2str(sigVal),' ',' is ', num2str(N))); 
+    display(sprintf('Size of the gaussian kernel for sigma = %d is %d',sigVal,N));
+    %display(strcat('Size of the gaussian kernel for sigma = ',num2str(sigVal),' ',' is ', num2str(N))); 
 
     % Reference :  http://www.mathworks.com/matlabcentral/answers/81689-how-to-implement-convolution-instead-of-the-built-in-imfilter
     % Create a Gaussian mask
