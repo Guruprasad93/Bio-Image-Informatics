@@ -18,11 +18,14 @@ I = double(I);
 %% Detection of Local maxima and Local minima (B.2.2)
 
 % Gaussian filtering
-[I_gaussFilter] = Gaussian_filter(I,65*1e-9);
+[I_gaussFilter] = Gaussian_filter(I,65e-9);
 
 % Finding local maxima and local minima 
 maskSize = 3;
 [localMax_3, localMin_3] = findLocalMaxMin (I_gaussFilter, maskSize);
+
+% Finding local maxima and local minima with 5x5 mask
+[localMax_5, localMin_5] = findLocalMaxMin (I_gaussFilter, 5);
 
 %% Establishing the local association of maxima and minima
   
@@ -65,7 +68,7 @@ I_detection = zeros(size(I));
 indices = sub2ind(size(I),finalMaxima(:,1),finalMaxima(:,2));
 I_detection(indices) = finalMaxima(:,3);
 %gaussian conv with point-spread-function
-%[I_detection] = Gaussian_filter(I,65*1e-9);
+%[I_detection] = Gaussian_filter(I,65e-9);
 
 
 [Algo_subPixelMaxima, Real_subPixelMaxima] = extraCredit(I_synthetic, I_detection, finalMaxima);
@@ -104,7 +107,7 @@ detectionError_std = std(euclidDist);
 %     %% Detection of Local maxima and Local minima (B.2.2)
 % 
 %     % Gaussian filtering
-%     [I_gaussFilter] = Gaussian_filter(I,65*1e-9);
+%     [I_gaussFilter] = Gaussian_filter(I,65e-9);
 % 
 %     % Finding local maxima and local minima 
 %     maskSize = 3;

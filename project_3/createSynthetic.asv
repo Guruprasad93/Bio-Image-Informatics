@@ -12,6 +12,12 @@ I_detection(indices) = finalMaxima(:,3);
 I_noise = randn(size(I))*noise*min(finalMaxima(:,3)) + noise_mean;
 % lambda = 515*1e-9; 
 
+
+
+%White noise - mean = noise_mean; standard-dev = average of all detected localmaxima
+I_noise = randn(size(I))*noise + noise_mean;
+
+>>>>>>> 2f56287035e2daecdcb6a835e84b1460e6c3b532
 %Adding noise to psf convolved detected image
 I_synthetic = I_detection + I_noise;
 
