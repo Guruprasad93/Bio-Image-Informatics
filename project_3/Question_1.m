@@ -51,7 +51,7 @@ save(file_save, 'I_detection');
 %% Creation of synthetic Image
 
 I_synthetic = createSynthetic(finalMaxima, I, bkgdMean,0.25);
-
+  
 %% Subpixel Detection
 
 %Passing the (Un)convolved original image for gaussian level detection
