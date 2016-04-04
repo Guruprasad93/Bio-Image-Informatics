@@ -1,26 +1,9 @@
 
 function [imGauss] = Gaussian_filter(im,pixelSize)
 %% The Inputs to the function are as follows
-% pathToImage : Takes as input a string which specifies the path to the
-% image
-% Example : pathToImage = 'image01.tiff'
-% sigma : Is a vector variable that takes as input the values of sigma
-% For Example sigma = [1,2,5,7]
+% im : The image that has to be filtered
+% pixelSize : the size of the pixel in nm's : 65nm or 13nm
 
-% input pixelSize should have unit in meters, that is, if pixel size is
-% 65nm, then input pixelSize = 65e-9
-
-% The output of the function consists of a series of images for different
-% sigma values
-
-
-%% Read in the image
-
-%im = double(imread(pathToImage));
-%figure,
-%imshow(im,[]);
-%imshow(im, []);
-%title('Original Image')
 
 %% 
 %Rayleigh's radius
@@ -31,14 +14,14 @@ radius = 0.61*lambda/NA;
 %Gaussian kernel sigma
 sigVal = (radius/3)/(pixelSize);
 
-%% Apply the Gaussian filter for all sigma
+%% Filter the image
 
 % Define size of Gaussian mask
     N = (2*ceil(3*sigVal))+1;
 
     %Display the size of the gaussian mask
     display(sprintf('Size of the gaussian kernel for sigma = %d is %d',sigVal,N));
-    %display(strcat('Size of the gaussian kernel for sigma = ',num2str(sigVal),' ',' is ', num2str(N))); 
+    
 
     % Reference :  http://www.mathworks.com/matlabcentral/answers/81689-how-to-implement-convolution-instead-of-the-built-in-imfilter
     % Create a Gaussian mask
@@ -47,10 +30,7 @@ sigVal = (radius/3)/(pixelSize);
     h = (exp(-(X.^2 + Y.^2) / (2*sigVal*sigVal)));
     h = h ./ sum(h(:));
 
-    % As a check i implemented the convolution using conv2 and for loops and both implementations return the same
-    % value with significant precision
-    % Note : using conv2 is much faster !! 
-    % blur =conv2(im, h,'same');
+   
 
     % Pad the image with zeros
     imPad = padarray(im,[floor(N/2) floor(N/2)]);
@@ -64,10 +44,7 @@ sigVal = (radius/3)/(pixelSize);
         end
     end    
 
-    %figure,
-    %imshow(imGauss(floor(N/2)+1: size(imPad,1)-floor(N/2),floor(N/2)+1:size(imPad,2)-floor(N/2)),[]);
-    %title(strcat('Blurred Image for sigma = ',' ',num2str(sigVal)));
-
+  
     imGauss = imGauss(floor(N/2)+1: size(imPad,1)-floor(N/2),floor(N/2)+1:size(imPad,2)-floor(N/2));
     
   
