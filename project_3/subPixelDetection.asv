@@ -8,29 +8,23 @@ function [subPixelDetect, realSubPixelMaxima] = subPixelDetection(finalMaxima, I
 % detected particle intensities with no added noise(raw image).
 
 %% Output
-% subPixelDetect : Detected sub-pixel co-ordinates that is returned by
-% using gaussian fitting.
-% realSubPixelMaxima : The actual sub-pixel co-ordinates obtained from the
-% raw image.
+% subPixelDetect : Detected sub-pixel co-ordinates that has the 
+% realSubPixelMaxima : 
 
 %% Access final detected particles
 
 if nargin == 3
 
-% Iterate over all the detected particles intensities
     for i = 1:size(finalMaxima,1)
 
        %% Synthetic Noisy Image
-        % select pixel-level detection
-        
-        % Oversample the detected particle(pixel) and its neighborhood
+        %select pixel-level detection
         I_oversample = I(finalMaxima(i,1)-1:finalMaxima(i,1)+1,finalMaxima(i,2)-1:finalMaxima(i,2)+1);
 
-        % Set the local maximum to be the intensity of the particle
-        % detected
+        %I_localMax = max(I_oversample(:));
         I_localMax = finalMaxima(i,3);
 
-        %Oversample results from pixel-level detection by a factor of 5
+        %Oversample results from pixel-level detection
         I_oversample = imresize(I_oversample,5); 
 
         %Perform gaussian detection
