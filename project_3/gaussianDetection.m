@@ -9,7 +9,7 @@ function [subpixel] = gaussianDetection(I_oversample, I_max)
     sigVal = (0.61*515/(1.4*3))/13;
 
     % Define size of Gaussian mask
-    N = (2*(3*sigVal))+1;
+    N = (2*ceil(3*sigVal))+1;
 
     % Create a Gaussian mask
     ind = -floor(N/2) : floor(N/2);
