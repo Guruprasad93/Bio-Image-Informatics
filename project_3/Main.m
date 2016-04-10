@@ -47,10 +47,12 @@ I_detection(indices) = 100;
 
 figure,
 imshow(I_detection,[])
+hold on
+scatter(finalMaxima(:,2),finalMaxima(:,1))
 file_save = sprintf('detectionImages\\img%0.3d.png',1);
 save(file_save, 'I_detection');
 %imwrite(I_detection, file_save);
-
+title(['Image size = ',num2str(size(I,1)),' x ', num2str(size(I,2))])
 %% Creation of synthetic Image
 
 I_synthetic = createSynthetic(finalMaxima, I, bkgdMean,0.10);
