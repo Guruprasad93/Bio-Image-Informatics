@@ -1,4 +1,4 @@
-function [subPixelDetect, realSubPixelDetect] = subPixelDetection(finalMaxima, I, I_syntheticNoNoise)
+function [subPixelDetect, realSubPixelMaxima] = subPixelDetection(finalMaxima, I, I_syntheticNoNoise)
 %% Input
 % finalMaxima : Load FinalMaxima. mat. It contains the x,y co-ordinate of detected particles and
 % the corresponding intensity value
@@ -37,7 +37,7 @@ if nargin == 3
         subpixel = gaussianDetection(I_oversample, I_localMax);
 
         %Subpixel detection
-        subPixelDetect(i,:) = [(finalMaxima(i,1)-2)*5+subpixel(1), (finalMaxima(i,2)-2)*5+subpixel(2), subpixel(1),subpixel(2)];
+        subPixelDetect(i,:) = [(finalMaxima(i,1)-1)*5+subpixel(1), (finalMaxima(i,2)-1)*5+subpixel(2), subpixel(1),subpixel(2)];
 
         %% Synthetic Image (without noise)
 
@@ -49,9 +49,8 @@ if nargin == 3
         [oversampleMax,index] = max(I_realoverSample(:));
         %I_localMax = oversampleMax
         [rowMax, colMax] = ind2sub(size(I_oversample),index);
-        %realSubPixelMaxima(i,:) = [rowMax, colMax];
-        realSubPixelDetect(i,:) = [rowMax, colMax, (finalMaxima(i,1)-2)*5+rowMax, (finalMaxima(i,2)-2)*5+colMax];
-
+        realSubPixelMaxima(i,:) = [rowMax, colMax];
+        real
 
     end
 else

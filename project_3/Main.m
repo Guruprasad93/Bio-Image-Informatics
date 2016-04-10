@@ -41,21 +41,23 @@ I_detection = zeros(size(I));
 indices = sub2ind(size(I),finalMaxima(:,1),finalMaxima(:,2));
 
 %I_detection(indices) = finalMaxima(:,3);
-I_detection(indices) = 100;
+I_detection(indices) = 500;
 
-%finalDetect = [
+I_overlay = I_detection + I;
 
 figure,
-imshow(I_detection,[])
+
+imshow(I_gaussFilter,[])
 hold on
-scatter(finalMaxima(:,2),finalMaxima(:,1))
+a  = 10;
+scatter(finalMaxima(:,2),finalMaxima(:,1),a,'filled');
 file_save = sprintf('detectionImages\\img%0.3d.png',1);
 save(file_save, 'I_detection');
 %imwrite(I_detection, file_save);
 title(['Image size = ',num2str(size(I,1)),' x ', num2str(size(I,2))])
 %% Creation of synthetic Image
 
-I_synthetic = createSynthetic(finalMaxima, I, bkgdMean,0.10);
+I_synthetic = createSynthetic(finalMaxima, I, bkgdMean,0.25);
 
 %% Subpixel Detection
 
