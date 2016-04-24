@@ -1,4 +1,4 @@
-function [cand_pts] = detectCurve(im, sigma)
+function [cand_pts, eigVal] = detectCurve(im, sigma)
 
 %Checking arguments input to function
 if nargin<2
@@ -47,8 +47,10 @@ for r = 1:size(im,1)
         
         if (abs(d(1,1))>abs(d(2,2)))
             v = [v(1,1),v(2,1)];
+            eigVal(r,c) = abs(d(1,1));
         else
             v = [v(1,2),v(2,2)];
+            eigVal(r,c) = abs(d(2,2));
         end
         
         t = -(Rx(r,c)*v(1) + Ry(r,c)*v(2))/(Rxx(r,c)*v(1)^2 + 2*Rxy_1(r,c)*v(1)*v(2)+Ryy(r,c)*v(2)^2);
@@ -57,10 +59,11 @@ for r = 1:size(im,1)
         px(r,c) = t*v(1);
         py(r,c) = t*v(2);
         
+        
     end
 end
 
-[cand_X, cand_Y] = find(abs(px)<=0.5 & abs(py)<=0.5);
+[cand_X, cand_Y] = find(abs(px)<=0.5 & abs(py)<=0.5 &eigVal>0.005);
 cand_pts = [cand_X, cand_Y];
 
 figure,
